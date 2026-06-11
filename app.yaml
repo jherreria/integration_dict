@@ -1,0 +1,18 @@
+# Databricks Apps entrypoint. The runtime injects UVICORN_HOST=0.0.0.0 and
+# UVICORN_PORT=$DATABRICKS_APP_PORT, so uvicorn needs no host/port flags.
+command: ["uvicorn", "backend.main:app"]
+
+env:
+  # Entra/Databricks group(s) whose members get the integration (admin) role.
+  - name: "ADMIN_GROUPS"
+    value: "integration-admins"
+
+  # AI search: add a model serving endpoint resource to the app (resource key
+  # "serving-endpoint", permission "Can query") and uncomment:
+  # - name: "EMBEDDING_ENDPOINT"
+  #   valueFrom: "serving-endpoint"
+
+  # Lakebase: add a database resource to the app (resource key "database",
+  # permission "Can connect and create") and set your instance name:
+  # - name: "LAKEBASE_INSTANCE_NAME"
+  #   value: "integration-dict-db"

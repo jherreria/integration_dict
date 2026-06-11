@@ -1,0 +1,42 @@
+/* Tri-State G&T palette — hexes observed in tristate.coop site CSS / logo. */
+:root {
+  --ts-primary: #06548a; /* Tri-State blue (logo) */
+  --ts-primary-dark: #004a76;
+  --ts-green: #9cb03b;
+  --ts-green-dark: #7a922c;
+  --ts-accent: #db7447; /* orange accent */
+  --ts-teal: #6ea3a2;
+  --ts-slate: #3d4d55;
+  --ts-charcoal: #292929;
+
+  --color-bg: #f4f6f8;
+  --color-surface: #ffffff;
+  --color-border: #d7dee4;
+  --color-border-strong: #aebbc4;
+  --color-text: #243239;
+  --color-text-muted: #5d707a;
+  --color-danger: #b03a2e;
+  --color-danger-dark: #8e2e25;
+  --color-focus: #0b6dad;
+
+  /* Lifecycle status colors (always paired with a text label). */
+  --status-planning-bg: #e3e8ee;
+  --status-planning-fg: #3d4d55;
+  --status-dev-bg: #d9e8f5;
+  --status-dev-fg: #06548a;
+  --status-test-bg: #e9edd3;
+  --status-test-fg: #5f721f;
+  --status-qa-bg: #f7e3c8;
+  --status-qa-fg: #8a5a1f;
+  --status-prod-bg: #dcebd3;
+  --status-prod-fg: #2e6b27;
+  --status-fixing-bg: #f6dcd2;
+  --status-fixing-fg: #a8442a;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --shadow-card: 0 1px 3px rgba(36, 50, 57, 0.12);
+  --shadow-modal: 0 12px 40px rgba(36, 50, 57, 0.28);
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
