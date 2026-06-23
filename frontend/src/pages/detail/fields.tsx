@@ -31,6 +31,7 @@ export type FieldKind =
 /** Where each kind's edit-mode options come from (lookups API et al.). */
 export type OptionSource =
   | 'tags'
+  | 'projects'
   | 'systems'
   | 'types'
   | 'credential-types'
@@ -64,7 +65,7 @@ export const FIELDS: FieldDef[] = [
   { key: 'status', label: 'Status', section: 'overview', kind: 'status', optionSource: 'statuses' },
   { key: 'type', label: 'Type', section: 'overview', kind: 'lookup-type', optionSource: 'types' },
   { key: 'tags', label: 'Tags', section: 'overview', kind: 'tags', optionSource: 'tags' },
-  { key: 'associated_projects', label: 'Associated projects', section: 'overview', kind: 'text' },
+  { key: 'associated_projects', label: 'Associated projects', section: 'overview', kind: 'tags', optionSource: 'projects' },
   { key: 'documentation_url', label: 'Documentation URL', section: 'overview', kind: 'url' },
   // Systems & Data Flow
   { key: 'sources', label: 'Source systems', section: 'systems', kind: 'systems-multi', optionSource: 'systems' },
@@ -109,6 +110,7 @@ export const auditFieldLabel = (field: string): string => AUDIT_LABELS[field] ??
 /** Option lists loaded for edit mode, shaped for the inputs that use them. */
 export interface EditOptions {
   tags: MSOption[]
+  projects: MSOption[]
   systems: MSOption[]
   typeNames: string[]
   credentialTypeNames: string[]

@@ -22,7 +22,7 @@ export interface FormValues {
   upstream: string[]
   downstream: string[]
   integrated: string[]
-  associated_projects: string
+  associated_projects: string[]
   documentation_url: string
   notes: string
   complexity: Level | null

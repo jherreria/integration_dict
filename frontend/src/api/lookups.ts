@@ -7,6 +7,7 @@ export const getTags = () => get<NamedOut[]>('/lookups/tags')
 export const getSystems = () => get<NamedOut[]>('/lookups/systems')
 export const getTypes = () => get<NamedOut[]>('/lookups/types')
 export const getCredentialTypes = () => get<NamedOut[]>('/lookups/credential-types')
+export const getProjects = () => get<NamedOut[]>('/lookups/projects')
 export const getEnums = () => get<Enums>('/lookups/enums')
 
 // role=integration returns admins (the approver candidate list).

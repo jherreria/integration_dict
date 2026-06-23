@@ -13,6 +13,7 @@ import {
 import {
   getCredentialTypes,
   getEnums,
+  getProjects,
   getSystems,
   getTags,
   getTypes,
@@ -138,11 +139,12 @@ function LoadedDetail({
       getSystems(),
       getTypes(),
       getCredentialTypes(),
+      getProjects(),
       getUsers('integration'),
       getEnums(),
       fetchAllIntegrationOptions(),
     ])
-      .then(([tags, systems, types, credentialTypes, users, enums, integrationOpts]) => {
+      .then(([tags, systems, types, credentialTypes, projects, users, enums, integrationOpts]) => {
         if (cancelled) return
         // Merge in this integration's existing relationship targets so their
         // chips always resolve to a name even if they fall outside the list.
@@ -152,6 +154,7 @@ function LoadedDetail({
         }
         setOptions({
           tags: tags.map((t) => ({ value: t.name, label: t.name })),
+          projects: projects.map((p) => ({ value: p.name, label: p.name })),
           systems: systems.map((s) => ({ value: s.name, label: s.name })),
           typeNames: types.map((t) => t.name),
           credentialTypeNames: credentialTypes.map((c) => c.name),

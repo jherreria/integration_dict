@@ -23,6 +23,7 @@ from .models import (
     IntegrationType,
     Level,
     LinkKind,
+    Project,
     Role,
     Status,
     System,
@@ -66,7 +67,8 @@ def main() -> None:
         systems = {n: System(name=n) for n in system_names}
         types = {n: IntegrationType(name=n) for n in ["REST", "SOAP", "File", "bespoke"]}
         creds = {n: CredentialType(name=n) for n in ["OAuth2", "Basic", "API Key", "Certificate"]}
-        db.add_all([*tags.values(), *systems.values(), *types.values(), *creds.values()])
+        projects = {n: Project(name=n) for n in ["CIS Modernization", "Member Portal 2.0"]}
+        db.add_all([*tags.values(), *systems.values(), *types.values(), *creds.values(), *projects.values()])
         db.flush()
 
         # --- integrations ----------------------------------------------------
@@ -84,7 +86,7 @@ def main() -> None:
             tags=[tags["billing"], tags["finance"]],
             sources=[systems["SAP"]],
             targets=[systems["NetSuite"]],
-            associated_projects="CIS Modernization",
+            associated_projects=[projects["CIS Modernization"]],
             documentation_url="https://wiki.example.com/integrations/member-billing-sync",
             account_used="svc-billing-sync",
             needed_roles="NetSuite GL Writer; SAP IS-U Read",
@@ -151,7 +153,7 @@ def main() -> None:
             tags=[tags["member-portal"], tags["billing"]],
             sources=[systems["NetSuite"]],
             targets=[systems["Salesforce"]],
-            associated_projects="Member Portal 2.0",
+            associated_projects=[projects["Member Portal 2.0"]],
             created_by=priya,
             updated_by=priya,
         )

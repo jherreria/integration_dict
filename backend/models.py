@@ -164,6 +164,18 @@ class CredentialType(Base):
 Index("uq_credential_types_name_lower", func.lower(CredentialType.name), unique=True)
 
 
+class Project(Base):
+    """Associated projects for integrations — creatable lookup."""
+
+    __tablename__ = "projects"
+
+    id: Mapped[str] = mapped_column(String(32), primary_key=True, default=new_id)
+    name: Mapped[str] = mapped_column(String(120))
+
+
+Index("uq_projects_name_lower", func.lower(Project.name), unique=True)
+
+
 integration_tags = Table(
     "integration_tags",
     Base.metadata,
@@ -185,6 +197,13 @@ integration_targets = Table(
     Column("system_id", String(32), ForeignKey("systems.id", ondelete="CASCADE"), primary_key=True),
 )
 
+integration_projects = Table(
+    "integration_projects",
+    Base.metadata,
+    Column("integration_id", String(32), ForeignKey("integrations.id", ondelete="CASCADE"), primary_key=True),
+    Column("project_id", String(32), ForeignKey("projects.id", ondelete="CASCADE"), primary_key=True),
+)
+
 
 class Integration(Base):
     __tablename__ = "integrations"
@@ -195,7 +214,6 @@ class Integration(Base):
     status: Mapped[Status] = mapped_column(_enum(Status, "status"), default=Status.planning)
     type_id: Mapped[str | None] = mapped_column(ForeignKey("integration_types.id"), nullable=True)
 
-    associated_projects: Mapped[str] = mapped_column(Text, default="")
     documentation_url: Mapped[str] = mapped_column(String(2000), default="")
     notes: Mapped[str] = mapped_column(Text, default="")
 
@@ -244,6 +262,9 @@ class Integration(Base):
     )
     targets: Mapped[list[System]] = relationship(
         System, secondary=integration_targets, lazy="selectin", order_by=System.name
+    )
+    associated_projects: Mapped[list[Project]] = relationship(
+        Project, secondary=integration_projects, lazy="selectin", order_by=Project.name
     )
 
     @property

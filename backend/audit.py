@@ -95,7 +95,7 @@ def snapshot(db: Session, i: Integration) -> dict[str, str | None]:
         "upstream": _names(refs["upstream"]),
         "downstream": _names(refs["downstream"]),
         "integrated": _names(refs["integrated"]),
-        "associated_projects": i.associated_projects or None,
+        "associated_projects": _names(i.associated_projects) if i.associated_projects else None,
         "documentation_url": i.documentation_url or None,
         "complexity": i.complexity.value if i.complexity else None,
         "business_logic": i.business_logic.value if i.business_logic else None,

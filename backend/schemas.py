@@ -89,7 +89,7 @@ class IntegrationListItem(BaseModel):
 
 
 class IntegrationDetail(IntegrationListItem):
-    associated_projects: str
+    associated_projects: list[str]
     documentation_url: str
     notes: str
     complexity: str | None
@@ -142,7 +142,7 @@ class IntegrationUpdate(BaseModel):
     upstream: list[str] | None = None
     downstream: list[str] | None = None
     integrated: list[str] | None = None
-    associated_projects: str | None = None
+    associated_projects: list[Annotated[str, StringConstraints(max_length=120)]] | None = None
     documentation_url: str | None = Field(default=None, max_length=2000)
     notes: str | None = None
     complexity: Level | None = None
@@ -192,7 +192,7 @@ class IntegrationUpdate(BaseModel):
             raise ValueError("documentation_url must be an http(s) URL")
         return v
 
-    @field_validator("tags", "sources", "targets")
+    @field_validator("tags", "sources", "targets", "associated_projects")
     @classmethod
     def _clean_names(cls, v: list[str] | None) -> list[str] | None:
         return _clean_str_list(v)

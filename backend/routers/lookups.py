@@ -11,6 +11,7 @@ from ..models import (
     CredentialType,
     IntegrationType,
     Level,
+    Project,
     Role,
     Status,
     System,
@@ -56,6 +57,14 @@ def list_credential_types(
     user: CurrentUser = Depends(get_current_user),
 ) -> list[NamedOut]:
     return _named(db, CredentialType)
+
+
+@router.get("/lookups/projects", response_model=list[NamedOut])
+def list_projects(
+    db: Session = Depends(get_db),
+    user: CurrentUser = Depends(get_current_user),
+) -> list[NamedOut]:
+    return _named(db, Project)
 
 
 @router.get("/lookups/users", response_model=list[UserOut])

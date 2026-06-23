@@ -101,7 +101,7 @@ function viewValue(def: FieldDef, detail: IntegrationDetail): React.ReactNode {
     case 'lookup-credential':
       return detail.credential_type ?? EM_DASH
     case 'tags':
-      return <Chips values={detail.tags} />
+      return <Chips values={detail[def.key as 'tags' | 'associated_projects']} />
     case 'systems-multi':
       return <Chips values={detail[def.key as 'sources' | 'targets']} system />
     case 'integrations-multi':
@@ -239,17 +239,19 @@ function EditControl({
         </>
       )
     }
-    case 'tags':
+    case 'tags': {
+      const key = def.key as 'tags' | 'associated_projects'
       return (
         <MultiSelectCreatable
           inputId={controlId}
-          values={draft.tags}
-          options={options?.tags ?? []}
-          onChange={(values) => set('tags', values)}
+          values={draft[key]}
+          options={def.key === 'associated_projects' ? options?.projects ?? [] : options?.tags ?? []}
+          onChange={(values) => set(key, values)}
           creatable
           disabled={disabled}
         />
       )
+    }
     case 'systems-multi': {
       const key = def.key as 'sources' | 'targets'
       return (

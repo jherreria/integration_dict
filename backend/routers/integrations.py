@@ -23,6 +23,7 @@ from ..models import (
     IntegrationLink,
     IntegrationType,
     LinkKind,
+    Project,
     Role,
     Status,
     System,
@@ -50,7 +51,6 @@ _SCALAR_FIELDS = (
     "name",
     "description",
     "status",
-    "associated_projects",
     "documentation_url",
     "notes",
     "complexity",
@@ -69,7 +69,6 @@ _SKIP_IF_NONE = {"name", "status", "design_approved", "code_approved"}
 # ... and non-nullable text fields where an explicit null means "clear".
 _EMPTY_IF_NONE = {
     "description",
-    "associated_projects",
     "documentation_url",
     "notes",
     "account_used",
@@ -77,7 +76,7 @@ _EMPTY_IF_NONE = {
 }
 
 _LOOKUP_FIELDS = {"type": IntegrationType, "credential_type": CredentialType}
-_NAME_COLLECTIONS = {"tags": Tag, "sources": System, "targets": System}
+_NAME_COLLECTIONS = {"tags": Tag, "sources": System, "targets": System, "associated_projects": Project}
 _LINK_FIELDS = ("upstream", "downstream", "integrated")
 # Changing my "upstream" changes each affected neighbor's mirror field.
 _MIRROR = {"upstream": "downstream", "downstream": "upstream", "integrated": "integrated"}
@@ -147,7 +146,7 @@ def to_detail(db: Session, i: Integration) -> IntegrationDetail:
     refs = audit.link_refs(db, i.id)
     return IntegrationDetail(
         **to_list_item(i).model_dump(),
-        associated_projects=i.associated_projects,
+        associated_projects=[p.name for p in i.associated_projects],
         documentation_url=i.documentation_url,
         notes=i.notes,
         complexity=i.complexity.value if i.complexity else None,

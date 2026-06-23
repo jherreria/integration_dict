@@ -34,6 +34,7 @@ export interface IntegrationListItem {
   status: Status
   type: string | null
   tags: string[]
+  associated_projects: string[]
   sources: string[]
   targets: string[]
   created_at: string
@@ -42,7 +43,6 @@ export interface IntegrationListItem {
 }
 
 export interface IntegrationDetail extends IntegrationListItem {
-  associated_projects: string
   documentation_url: string
   notes: string
   complexity: Level | null
@@ -78,7 +78,7 @@ export interface IntegrationUpdatePayload {
   upstream?: string[]
   downstream?: string[]
   integrated?: string[]
-  associated_projects?: string
+  associated_projects?: string[]
   documentation_url?: string
   notes?: string
   complexity?: Level | null
